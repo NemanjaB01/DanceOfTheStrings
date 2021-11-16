@@ -139,7 +139,7 @@ die\*der Benutzer\*in tätigt nun eine Eingabe, um eine Option auszuwählen. Fal
 
 ### Text ohne Zeilennummer ausgeben
 
-Wurde die Auswahl `o` durch die\*den Benutzer\*in getroffen, wird der gespeicherte Text ausgegeben. Zwischen den einzelnen Sätzen wird genau ein Leerzeichen ausgegeben. Beachten Sie, dass sich der Text während der Laufzeit des Programms verändern kann (z.B. durch die Option `s` - *Zwei Sätze vertauschen*)!
+Wurde die Auswahl `o` durch die\*den Benutzer\*in getroffen, wird der gespeicherte Text ausgegeben. Nach **jedem** Satz wird genau ein Leerzeichen ausgegeben. Beachten Sie, dass sich der Text während der Laufzeit des Programms verändern kann (z.B. durch die Option `s` - *Zwei Sätze vertauschen*)!
 
 Beispiel-Eingabe:
 ```
