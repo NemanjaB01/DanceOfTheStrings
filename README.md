@@ -185,6 +185,7 @@ Weitere Beispiel-Ausgabe nach dem Vertauschen von Satz 1 und Satz 2 (Option `s`,
    2 | Das ist ein unnoetiger Satz.
 
 ```
+Bitte beachten Sie auch, dass bei einer zweistelligen Nummer nicht eingerückt wird. Somit könnte man die Satznummer mit `%4d` ausgeben.
 
 ---
 
