@@ -243,7 +243,7 @@ char **makeSentences(char *text, int *num)
   for (int text_index = 0; text[text_index] != '\0' && text + text_index != NULL; text_index++)
   {
     char tmp = text[text_index];
-    if (tmp == ' ' && sentence_length == 0)
+    if (tmp == ' ' && sentence_length == 0 && num_sentences > 0)
     {
       continue;
     }
@@ -277,7 +277,8 @@ char **makeSentences(char *text, int *num)
       current_sentence = (char *)calloc(initial_sentence_length, sizeof(char));
       if(current_sentence == NULL)
       { 
-          return NULL;
+        free(sentences);
+        return NULL;
       }
 
     }
@@ -302,8 +303,9 @@ char *userInput()
   {
     fgets(text + text_len , STARTLEGNTH , stdin);
     current_len = sentenceLength(text, text_len);
-    if(current_len == STARTLEGNTH)
+    if(current_len == (STARTLEGNTH - 1 ))
     {
+      text_len += current_len;
       char *tmp =(char*)realloc(text,(text_len + STARTLEGNTH)  * sizeof(char));
       if(tmp == NULL)
       {
@@ -315,13 +317,17 @@ char *userInput()
         text = tmp;
       }
     }
-    text_len += current_len;
-  } while ((STARTLEGNTH - 1  == current_len) && (text[STARTLEGNTH- 2] != '\n'));
+    else
+    {
+      text_len += current_len;
+    }
+  } while ((STARTLEGNTH - 1  == current_len) && (text[text_len- 2] != '\n'));
 
   text[text_len++] = '\0';
 
   return text;
 }
+
 
 int main()
 {
@@ -333,10 +339,15 @@ int main()
     printf("Zu wenig Speicher vorhanden!\n");
     return 3;
   }
-
   printf("\n");
   int num_sentences = 0;
   sentences = makeSentences(text, &num_sentences);
+  if(sentences == NULL)
+  {
+    free(text);
+    printf("Zu wenig Speicher vorhanden!\n");
+    return 3;
+  }
 
   if (num_sentences == 0)
   {
@@ -349,25 +360,19 @@ int main()
     free(sentences);
     return 1;
   }
-  else if(num_sentences > 0)
+  /*else if(num_sentences > 0)
   {
     int text_index = 0 ;
-    char tmp = text[text_index];
-    for (text_index = 0; text[text_index] != '\0'; text_index++)
+    while(text[text_index] != '\0')
     {
-      tmp = text[text_index - 1];
+      text_index++;
     }
-    if (tmp != '!' && tmp != '?' && tmp != '.') 
+    if (text[text_index ] != '!' && text[text_index] != '?' && text[text_index] != '.') 
     {
       printf("Der Text endet ohne Satzzeichen!\n");
       return 2;
     }
-  }
-  else if (text == NULL) 
-  {
-    printf("Zu wenig Speicher vorhanden!\n");
-    return 3;
-  }
+  }*/
   printf("\n");
   int input, user_choice;
   int space = 1;
