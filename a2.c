@@ -149,7 +149,7 @@ char **connectSentence(char **sentences, int *num_sentences)
 
   int s1_length = sentenceLength(sentence_1, 0);
 
-  int total_size = s1_length - 1 + 4 + sentenceLength(sentence_2, 0) + 1;
+  int total_size = s1_length + 5 + sentenceLength(sentence_2, 0) ;
   sentence_1 = (char *)realloc(sentence_1, sizeof(char) * total_size);
   if(sentence_1 == NULL)
   {
@@ -225,7 +225,7 @@ char **makeSentences(char *text, int *num)
 {
 
   int num_sentences = 0;
-  int max_num_sentence = 5;
+  int max_num_sentence = 10;
   int initial_sentence_length = 20;
   int max_sentence_length = 20;
   int sentence_length = 0;
@@ -237,6 +237,7 @@ char **makeSentences(char *text, int *num)
   char *current_sentence = (char *)calloc(initial_sentence_length, sizeof(char));
    if(current_sentence == NULL)
   {
+    free(sentences);
     return NULL;
   }
 
@@ -263,14 +264,14 @@ char **makeSentences(char *text, int *num)
     {
       if (num_sentences == max_num_sentence) 
       {
-        max_num_sentence += 2;
+        max_num_sentence += 5;
         sentences = (char **)realloc(sentences, max_num_sentence * sizeof(char));
          if(sentences == NULL)
          {
             return NULL;
          }
       }
-      current_sentence[sentence_length] = '\0';
+      current_sentence[sentence_length++] = '\0';
       sentences[num_sentences++] = current_sentence;
       max_sentence_length = 20;
       sentence_length = 0;
