@@ -223,9 +223,17 @@ void selectMenu()
 
 char **makeSentences(char *text, int *num)
 {
-
+  int end_of_sentences = 0;
+  for(int index = 0;text[index] != '\0';index ++)
+  {
+    char tmp = text[index];
+    if(tmp == '.' || tmp == '!' || tmp == '?')
+    {
+      end_of_sentences ++;
+    }
+  }
   int num_sentences = 0;
-  int max_num_sentence = 10;
+  int max_num_sentence = end_of_sentences;
   int initial_sentence_length = 20;
   int max_sentence_length = 20;
   int sentence_length = 0;
@@ -262,15 +270,6 @@ char **makeSentences(char *text, int *num)
 
     if (tmp == '.' || tmp == '?' || tmp == '!') 
     {
-      if (num_sentences == max_num_sentence) 
-      {
-        max_num_sentence += 5;
-        sentences = (char **)realloc(sentences, max_num_sentence * sizeof(char));
-         if(sentences == NULL)
-         {
-            return NULL;
-         }
-      }
       current_sentence[sentence_length++] = '\0';
       sentences[num_sentences++] = current_sentence;
       max_sentence_length = 20;
@@ -361,19 +360,20 @@ int main()
     free(sentences);
     return 1;
   }
-  /*else if(num_sentences > 0)
+  else if(num_sentences > 0)
   {
     int text_index = 0 ;
     while(text[text_index] != '\0')
     {
       text_index++;
     }
-    if (text[text_index ] != '!' && text[text_index] != '?' && text[text_index] != '.') 
+    char tmp = text[text_index - 2];
+    if (tmp != '!' && tmp != '?' && tmp != '.') 
     {
       printf("Der Text endet ohne Satzzeichen!\n");
       return 2;
     }
-  }*/
+  }
   printf("\n");
   int input, user_choice;
   int space = 1;
