@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define STARTLEGNTH 100
+#define STARTLEGNTH 20
 
 
 int sentenceLength(char *text, int text_index)
@@ -328,7 +328,7 @@ char *userInput()
     {
       text_len += current_len;
     }
-  } while ((STARTLEGNTH - 1  == current_len) && (text[text_len- 2] != '\n'));
+  } while ((STARTLEGNTH - 1  == current_len) && (text[text_len- 1] != '\n'));
 
   text[text_len++] = '\0';
 
