@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define STARTLEGNTH 20
+#define STARTLEGNTH 100
 
 
 int sentenceLength(char *text, int text_index)
@@ -385,19 +385,19 @@ int main()
   int input, user_choice;
   int space = 1;
   selectMenu();
-  while (space > 0) 
+  while (space > 0)
   {
     printf("Ihre Wahl: ");
     space = 0;
-    while (EOF != (input = getchar()) && input != '\n' && input != '\r') 
+    while (EOF != (input = getchar()) && input != '\n')
     {
-      if (input == ' ') 
+      if (input == ' ' )
       {
         space++;
       }
       user_choice = input;
     }
-    if (space == 0) 
+    if (space == 0)
     {
       space = 1;
       if (user_choice == 't' || user_choice == 'p' || user_choice == 'o' || user_choice == 's' || user_choice == 'c' || user_choice == 'e')
@@ -410,19 +410,19 @@ int main()
         {
           printSentencesWithNum(sentences, &num_sentences);
         }
-        else if (user_choice == 'o') 
+        else if (user_choice == 'o')
         {
           printSenteceWithoutNum(sentences, &num_sentences);
-        } 
-        else if (user_choice == 's') 
+        }
+        else if (user_choice == 's')
         {
           sentences = replaceSentences(sentences, &num_sentences);
-        } 
-        else if (user_choice == 'c') 
+        }
+        else if (user_choice == 'c')
         {
           sentences = connectSentence(sentences, &num_sentences);
-        } 
-        else if (user_choice == 'e') 
+        }
+        else if (user_choice == 'e')
         {
           printf("Programmende!\n");
           break;
