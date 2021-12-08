@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define STARTLEGNTH 20
+#define STARTLEGNTH 50
 
 
 int sentenceLength(char *text, int text_index)
@@ -270,6 +270,7 @@ char **makeSentences(char *text, int *num)
       current_sentence = (char *)realloc(current_sentence, max_sentence_length * sizeof(char));
        if(current_sentence == NULL)
        {
+         free(sentences);
           return NULL;
        }
     }
