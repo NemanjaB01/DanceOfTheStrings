@@ -67,7 +67,7 @@ void textStatistic(char **sentences, int *num_sentences)
 int clean()
 {
   while (getchar()!= '\n');
-  return 1;  
+  return 1;
 }
 
 
@@ -389,7 +389,7 @@ int main()
   {
     printf("Ihre Wahl: ");
     space = 0;
-    while (EOF != (input = getchar()) && input != '\n') 
+    while (EOF != (input = getchar()) && input != '\n' && input != '\r') 
     {
       if (input == ' ') 
       {
