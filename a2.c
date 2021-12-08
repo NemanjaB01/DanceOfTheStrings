@@ -391,8 +391,8 @@ int main()
     space = 0;
     while (EOF != (input = getchar()) && input != '\n')
     {
-      if (user_choice != 't' && user_choice != 'p' && user_choice != 'o' 
-      && user_choice != 's' && user_choice != 'c' && user_choice != 'e')
+      if ((input != 't')&& (input != 'p') && (input != 'o')
+      && (input != 's') && (input != 'c') && (input != 'e'))
       {
         space++;
       }
