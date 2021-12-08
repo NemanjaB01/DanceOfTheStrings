@@ -64,6 +64,12 @@ void textStatistic(char **sentences, int *num_sentences)
   printf("\n");
 }
 
+int clean()
+{
+  while (getchar()!= '\n');
+  return 1;  
+}
+
 
 char **replaceSentences(char **sentences, int *num_sentences)
 {
@@ -75,27 +81,28 @@ char **replaceSentences(char **sentences, int *num_sentences)
   }
   else
   {
-    int firstSentence = 0;
-    int secondSentence = 0;
+    int first_sentence = 0;
+    int second_sentence = 0;
+    char input_check;
     do
     {
       printf("Nummer des ersten Satzes: ");
-      scanf("%d", &firstSentence);
-      getchar();
-    } while (firstSentence > *num_sentences || firstSentence < 0);
+
+    } while ((( scanf("%d%c", &first_sentence,&input_check) != 2 || input_check != '\n') && clean()) 
+    ||  first_sentence > *num_sentences || first_sentence <= 0);
 
     do
     {
       printf("Nummer des zweiten Satzes: ");
-      scanf("%d", &secondSentence);
-      getchar();
-    } while (secondSentence > *num_sentences || secondSentence < 0 || secondSentence == firstSentence);
+
+    } while ((( scanf("%d%c", &second_sentence,&input_check) != 2 || input_check != '\n') && clean()) || 
+    second_sentence > *num_sentences || second_sentence < 0 || second_sentence == first_sentence);
 
     printf("\n");
-    char *sentence_1 = sentences[firstSentence - 1];
-    char *sentence_2 = sentences[secondSentence - 1];
-    sentences[firstSentence - 1] = sentence_2;
-    sentences[secondSentence - 1] = sentence_1;
+    char *sentence_1 = sentences[first_sentence - 1];
+    char *sentence_2 = sentences[second_sentence - 1];
+    sentences[first_sentence - 1] = sentence_2;
+    sentences[second_sentence - 1] = sentence_1;
 
     return sentences;
   }
@@ -119,6 +126,7 @@ char **connectSentence(char **sentences, int *num_sentences)
 {
   int first_sentence = 0;
   int second_sentence = 0;
+  char input_check;
 
   if (*num_sentences == 1)
   {
@@ -131,16 +139,15 @@ char **connectSentence(char **sentences, int *num_sentences)
     do
     {
       printf("Nummer des ersten Satzes: ");
-      scanf("%d", &first_sentence);
-      getchar();
-    } while (first_sentence > *num_sentences || first_sentence < 0);
+    } while ((( scanf("%d%c", &first_sentence,&input_check) != 2 || input_check != '\n') && clean()) 
+    ||first_sentence > *num_sentences || first_sentence < 0);
 
     do
     {
       printf("Nummer des zweiten Satzes: ");
-      scanf("%d", &second_sentence);
-      getchar();
-    } while (second_sentence > *num_sentences || second_sentence < 0 || second_sentence == first_sentence);
+
+    } while ((( scanf("%d%c", &second_sentence,&input_check) != 2 || input_check != '\n') && clean()) 
+    ||second_sentence > *num_sentences || second_sentence < 0 || second_sentence == first_sentence);
   }
 
   printf("\n");
