@@ -96,7 +96,7 @@ char **replaceSentences(char **sentences, int *num_sentences)
       printf("Nummer des zweiten Satzes: ");
 
     } while ((( scanf("%d%c", &second_sentence,&input_check) != 2 || input_check != '\n') && clean()) || 
-    second_sentence > *num_sentences || second_sentence < 0 || second_sentence == first_sentence);
+    second_sentence > *num_sentences || second_sentence <= 0 || second_sentence == first_sentence);
 
     printf("\n");
     char *sentence_1 = sentences[first_sentence - 1];
@@ -140,14 +140,14 @@ char **connectSentence(char **sentences, int *num_sentences)
     {
       printf("Nummer des ersten Satzes: ");
     } while ((( scanf("%d%c", &first_sentence,&input_check) != 2 || input_check != '\n') && clean()) 
-    ||first_sentence > *num_sentences || first_sentence < 0);
+    ||first_sentence > *num_sentences || first_sentence <= 0);
 
     do
     {
       printf("Nummer des zweiten Satzes: ");
 
     } while ((( scanf("%d%c", &second_sentence,&input_check) != 2 || input_check != '\n') && clean()) 
-    ||second_sentence > *num_sentences || second_sentence < 0 || second_sentence == first_sentence);
+    ||second_sentence > *num_sentences || second_sentence <= 0 || second_sentence == first_sentence);
   }
 
   printf("\n");
