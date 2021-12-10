@@ -1,8 +1,7 @@
 // <a2>.c
 //
-// < This program takes users inputs to calculate necessary fire-fighting pumps
-// > <In this process program calucate different formulas to get coordinates for
-// pumps>
+// < This program takes users input as string and makes sentences >
+// <after that user is asked which option he wants to choose to manipulate with these sentences>
 //
 // Group: <group Simone F>
 //
@@ -13,8 +12,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define STARTLEGNTH 50
+#define START_LEGNTH 50
 
+// takes two parameters text and text index 
+// counts until it comes to null charachter and returns that value
 
 int sentenceLength(char *text, int text_index)
 {
@@ -26,6 +27,10 @@ int sentenceLength(char *text, int text_index)
   return i;
 }
 
+
+// takes two parameters sentences and number of sentences
+// counts lower and upper cases, total number of cases ,signs and sentences
+// return no value
 
 void textStatistic(char **sentences, int *num_sentences)
 {
@@ -64,12 +69,20 @@ void textStatistic(char **sentences, int *num_sentences)
   printf("\n");
 }
 
+
+//takes no parameter 
+// clean stdin and reurn value one
+
 int clean()
 {
   while (getchar()!= '\n');
   return 1;
 }
 
+
+//takes two parameters sentences and number of sentences
+//ask user to enter numbers of sentences he wants to replace
+//return changed sentences
 
 char **replaceSentences(char **sentences, int *num_sentences)
 {
@@ -108,6 +121,11 @@ char **replaceSentences(char **sentences, int *num_sentences)
   }
 }
 
+
+// takes two parametes sentences and number of sentences
+// prints sentences without number in one line
+// return no value
+
 void printSenteceWithoutNum(char **sentences, int *num_sentences)
 {
   printf("Text:\n");
@@ -121,6 +139,12 @@ void printSenteceWithoutNum(char **sentences, int *num_sentences)
   }
   printf("\n\n");
 }
+
+
+// takes two parameters sentences and number of sentences 
+// asks user to enter numbers of sentences he wants to connect
+// sentences will be connected with 'und' and last character from frist sentence will be deleted
+// return changed sentences
 
 char **connectSentence(char **sentences, int *num_sentences)
 {
@@ -201,6 +225,11 @@ char **connectSentence(char **sentences, int *num_sentences)
   return sentences;
 }
 
+
+// takes two parameters sentences and number of sentences
+// prints sentences with numbers in separeted lines
+// return no value
+
 void printSentencesWithNum(char **sentences, int *num_sentences)
 {
   printf(" Nr. | Satz\n");
@@ -216,6 +245,9 @@ void printSentencesWithNum(char **sentences, int *num_sentences)
 }
 
 
+// takes no parameter
+// prints choice menu and return no value
+
 void selectMenu()
 {
   printf("Wählen Sie eine Option:\n");
@@ -227,6 +259,11 @@ void selectMenu()
   printf("  e: Programm beenden\n");
   printf("\n");
 }
+
+
+// takes two parameters text and number
+// goes through text when he encounters a particular sign
+// return new made sentences
 
 char **makeSentences(char *text, int *num)
 {
@@ -297,24 +334,27 @@ char **makeSentences(char *text, int *num)
 }
 
 
+// takes no parameter
+// takes user input from stdin
+// return user input type string
 char *userInput()
 {
   size_t current_len = 0;
   size_t text_len = 0;
 
-  char *text = (char*)calloc(STARTLEGNTH, sizeof(char));
+  char *text = (char*)calloc(START_LEGNTH, sizeof(char));
   if(text == NULL)
   {
     return NULL;
   }
   do
   {
-    fgets(text + text_len , STARTLEGNTH , stdin);
+    fgets(text + text_len , START_LEGNTH , stdin);
     current_len = sentenceLength(text, text_len);
-    if(current_len == (STARTLEGNTH - 1 ))
+    if(current_len == (START_LEGNTH - 1 ))
     {
       text_len += current_len;
-      char *tmp =(char*)realloc(text,(text_len + STARTLEGNTH)  * sizeof(char));
+      char *tmp =(char*)realloc(text,(text_len + START_LEGNTH)  * sizeof(char));
       if(tmp == NULL)
       {
         free(text);
@@ -329,7 +369,7 @@ char *userInput()
     {
       text_len += current_len;
     }
-  } while ((STARTLEGNTH - 1  == current_len) && (text[text_len- 1] != '\n'));
+  } while ((START_LEGNTH - 1  == current_len) && (text[text_len- 1] != '\n'));
 
   text[text_len++] = '\0';
 
@@ -337,29 +377,33 @@ char *userInput()
 }
 
 
+// takes two parameters sentences and numbeer of sentences
+// asks user for his choice of function until option 'e' is choosen
+// return no value
+
 void userChoice(char **sentences,int num_sentences)
 {
   int input, user_choice;
-  int space = 1;
+  int check_input = 1;
   selectMenu();
-  while (space > 0)
+  while (check_input > 0)
   {
     int num_charachters = 0;
     printf("Ihre Wahl: ");
-    space = 0;
+    check_input = 0;
     while (EOF != (input = getchar()) && input != '\n')
     {
       num_charachters ++;
       if (((input != 't')&& (input != 'p') && (input != 'o')&& (input != 's')
        && (input != 'c') && (input != 'e')))
       {
-        space++;
+        check_input++;
       }
       user_choice = input;
     }
-    if (space == 0 && num_charachters == 1)
+    if (check_input == 0 && num_charachters == 1)
     {
-      space = 1;
+      check_input = 1;
       if (user_choice == 't')
       {
         textStatistic(sentences, &num_sentences);
@@ -387,7 +431,7 @@ void userChoice(char **sentences,int num_sentences)
       }
       selectMenu();
     }
-   space ++;
+   check_input ++;
   }
   for (int i = 0; i < num_sentences; i++)
   {
@@ -395,6 +439,12 @@ void userChoice(char **sentences,int num_sentences)
   }
   free(sentences);
 }
+
+
+// tha main program
+// takes no parameter 
+// calls functions and checks for possible errors
+// return always 0
 
 int main()
 {
@@ -452,3 +502,4 @@ int main()
   free(text);
   return 0;
 }
+
