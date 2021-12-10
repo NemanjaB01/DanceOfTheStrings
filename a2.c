@@ -337,6 +337,60 @@ char *userInput()
 }
 
 
+void userChoice(char **sentences,int num_sentences)
+{
+  int input, user_choice;
+  int space = 1;
+  selectMenu();
+  while (space > 0)
+  {
+    int num_charachters = 0;
+    printf("Ihre Wahl: ");
+    space = 0;
+    while (EOF != (input = getchar()) && input != '\n')
+    {
+      num_charachters ++;
+      if (((input != 't')&& (input != 'p') && (input != 'o')&& (input != 's')
+       && (input != 'c') && (input != 'e')))
+      {
+        space++;
+      }
+      user_choice = input;
+    }
+    if (space == 0 && num_charachters == 1)
+    {
+      space = 1;
+      if (user_choice == 't')
+      {
+        textStatistic(sentences, &num_sentences);
+      }
+      else if (user_choice == 'p')
+      {
+        printSentencesWithNum(sentences, &num_sentences);
+      }
+      else if (user_choice == 'o')
+      {
+        printSenteceWithoutNum(sentences, &num_sentences);
+      }
+      else if (user_choice == 's')
+      {
+        sentences = replaceSentences(sentences, &num_sentences);
+      }
+      else if (user_choice == 'c')
+      {
+        sentences = connectSentence(sentences, &num_sentences);
+      }
+      else if (user_choice == 'e')
+      {
+        printf("Programmende!\n");
+        break;
+      }
+      selectMenu();
+    }
+   space ++;
+  }
+}
+
 int main()
 {
   printf("Bitte Text eingeben:");
@@ -389,56 +443,7 @@ int main()
     }
   }
   printf("\n");
-  int input, user_choice;
-  int space = 1;
-  selectMenu();
-  while (space > 0)
-  {
-    int num_charachters = 0;
-    printf("Ihre Wahl: ");
-    space = 0;
-    while (EOF != (input = getchar()) && input != '\n')
-    {
-      num_charachters ++;
-      if (((input != 't')&& (input != 'p') && (input != 'o')&& (input != 's')
-       && (input != 'c') && (input != 'e')))
-      {
-        space++;
-      }
-      user_choice = input;
-    }
-    if (space == 0 && num_charachters == 1)
-    {
-      space = 1;
-      if (user_choice == 't')
-      {
-        textStatistic(sentences, &num_sentences);
-      }
-      else if (user_choice == 'p')
-      {
-        printSentencesWithNum(sentences, &num_sentences);
-      }
-      else if (user_choice == 'o')
-      {
-        printSenteceWithoutNum(sentences, &num_sentences);
-      }
-      else if (user_choice == 's')
-      {
-        sentences = replaceSentences(sentences, &num_sentences);
-      }
-      else if (user_choice == 'c')
-      {
-        sentences = connectSentence(sentences, &num_sentences);
-      }
-      else if (user_choice == 'e')
-      {
-        printf("Programmende!\n");
-        break;
-      }
-      selectMenu();
-    }
-   space ++;
-  }
+  userChoice(sentences,num_sentences);
   free(text);
   for (int i = 0; i < num_sentences; i++)
   {
