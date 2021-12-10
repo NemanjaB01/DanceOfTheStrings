@@ -389,6 +389,11 @@ void userChoice(char **sentences,int num_sentences)
     }
    space ++;
   }
+  for (int i = 0; i < num_sentences; i++)
+  {
+    free(sentences[i]);
+  }
+  free(sentences);
 }
 
 int main()
@@ -445,10 +450,5 @@ int main()
   printf("\n");
   userChoice(sentences,num_sentences);
   free(text);
-  for (int i = 0; i < num_sentences; i++)
-  {
-    free(sentences[i]);
-  }
-  free(sentences);
   return 0;
 }
