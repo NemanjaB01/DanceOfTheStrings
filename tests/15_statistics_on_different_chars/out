@@ -22,7 +22,7 @@ Wählen Sie eine Option:
 
 Ihre Wahl:  Nr. | Satz
 -----+----------------------------------------
-   1 |  "#$%&\'()*+,-.
+   1 | "#$%&\'()*+,-.
    2 | /0123456789:;<=>?
    3 | @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~!
 
@@ -47,7 +47,7 @@ Ihre Wahl:  Nr. | Satz
 -----+----------------------------------------
    1 | @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~!
    2 | /0123456789:;<=>?
-   3 |  "#$%&\'()*+,-.
+   3 | "#$%&\'()*+,-.
 
 Wählen Sie eine Option:
   t: Text-Statistik
@@ -69,7 +69,7 @@ Wählen Sie eine Option:
 Ihre Wahl:  Nr. | Satz
 -----+----------------------------------------
    1 | @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ und /0123456789:;<=>?
-   2 |  "#$%&\'()*+,-.
+   2 | "#$%&\'()*+,-.
 
 Wählen Sie eine Option:
   t: Text-Statistik

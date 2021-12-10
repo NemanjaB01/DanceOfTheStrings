@@ -259,7 +259,7 @@ char **makeSentences(char *text, int *num)
   for (int text_index = 0; text[text_index] != '\0' && text + text_index != NULL; text_index++)
   {
     char tmp = text[text_index];
-    if (tmp == ' ' && sentence_length == 0 && num_sentences > 0)
+    if ((tmp == ' ' || tmp == '\t') && sentence_length == 0)
     {
       continue;
     }
@@ -392,8 +392,8 @@ int main()
     space = 0;
     while (EOF != (input = getchar()) && input != '\n')
     {
-      if ((input != 't')&& (input != 'p') && (input != 'o')
-      && (input != 's') && (input != 'c') && (input != 'e'))
+      if (((input != 't')&& (input != 'p') && (input != 'o')&& (input != 's')
+       && (input != 'c') && (input != 'e')))
       {
         space++;
       }
