@@ -388,10 +388,12 @@ int main()
   selectMenu();
   while (space > 0)
   {
+    int num_charachters = 0;
     printf("Ihre Wahl: ");
     space = 0;
     while (EOF != (input = getchar()) && input != '\n')
     {
+      num_charachters ++;
       if (((input != 't')&& (input != 'p') && (input != 'o')&& (input != 's')
        && (input != 'c') && (input != 'e')))
       {
@@ -399,7 +401,7 @@ int main()
       }
       user_choice = input;
     }
-    if (space == 0)
+    if (space == 0 && num_charachters == 1)
     {
       space = 1;
       if (user_choice == 't')
@@ -429,6 +431,7 @@ int main()
       }
       selectMenu();
     }
+   space ++;
   }
   free(text);
   for (int i = 0; i < num_sentences; i++)
