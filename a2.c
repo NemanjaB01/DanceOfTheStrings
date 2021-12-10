@@ -378,6 +378,12 @@ int main()
     char tmp = text[text_index - 2];
     if (tmp != '!' && tmp != '?' && tmp != '.') 
     {
+      free(text);
+      for (int i = 0; i < num_sentences; i++)
+      {
+        free(sentences[i]);
+      }
+      free(sentences);
       printf("Der Text endet ohne Satzzeichen!\n");
       return 2;
     }
