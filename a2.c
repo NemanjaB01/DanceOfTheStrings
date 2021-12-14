@@ -13,9 +13,19 @@
 #include <stdlib.h>
 
 #define START_LEGNTH 50
+#define MEMORY_ERROR 3
+#define END_SIGN_ERROR 2
+#define NO_SENTENCE_ERROR 1
 
-// takes two parameters text and text index 
-// counts until it comes to null charachter and returns that value
+//-----------------------------------------------------------------------------
+///
+/// starts counting in text from text index until it reaches null charachter
+///
+/// @param text - string to which legnth should be determined
+/// @param text_index - position number in text
+///
+/// return calculated value i
+//
 
 int sentenceLength(char *text, int text_index)
 {
@@ -28,9 +38,15 @@ int sentenceLength(char *text, int text_index)
 }
 
 
-// takes two parameters sentences and number of sentences
-// counts lower and upper cases, total number of cases ,signs and sentences
-// return no value
+//-----------------------------------------------------------------------------
+///
+/// goes through sentences and counts lower and upper cases, total number of cases ,signs and sentences
+///
+/// @param sentences - string that holds sentences
+/// @param num_sentences - number of sentences
+///
+/// @return no value
+//
 
 void textStatistic(char **sentences, int *num_sentences)
 {
@@ -70,8 +86,14 @@ void textStatistic(char **sentences, int *num_sentences)
 }
 
 
-//takes no parameter 
-// clean stdin and reurn value one
+//-----------------------------------------------------------------------------
+///
+/// reads stdin and cleans it until it reaches new line
+///
+/// @param -takes no parameter 
+///
+/// @return always 1
+//
 
 int clean()
 {
@@ -80,9 +102,15 @@ int clean()
 }
 
 
-//takes two parameters sentences and number of sentences
-//ask user to enter numbers of sentences he wants to replace
-//return changed sentences
+//-----------------------------------------------------------------------------
+///
+/// ask user to enter numbers of setences he wants to replace and check if input is valid
+///
+/// @param sentences - string that holds sentences
+/// @param num_sentences - number of sentences
+///
+/// @return changed sentences
+//
 
 char **replaceSentences(char **sentences, int *num_sentences)
 {
@@ -122,9 +150,15 @@ char **replaceSentences(char **sentences, int *num_sentences)
 }
 
 
-// takes two parametes sentences and number of sentences
-// prints sentences without number in one line
-// return no value
+//-----------------------------------------------------------------------------
+///
+/// prints senteces without number in one line
+///
+/// @param sentences - string that holds sentences
+/// @param num_sentences - number of sentences
+///
+/// @return no value
+//
 
 void printSenteceWithoutNum(char **sentences, int *num_sentences)
 {
@@ -141,10 +175,16 @@ void printSenteceWithoutNum(char **sentences, int *num_sentences)
 }
 
 
-// takes two parameters sentences and number of sentences 
-// asks user to enter numbers of sentences he wants to connect
-// sentences will be connected with 'und' and last character from frist sentence will be deleted
-// return changed sentences
+//-----------------------------------------------------------------------------
+///
+/// asks user to enter numbers of sentences he wants to connect 
+/// senteces will be connected with und and last charachter from frist sentence will be deleted
+///
+/// @param sentences - string that holds sentences
+/// @param num_sentences - number of sentences
+///
+/// @return changed sentences
+//
 
 char **connectSentence(char **sentences, int *num_sentences)
 {
@@ -226,9 +266,15 @@ char **connectSentence(char **sentences, int *num_sentences)
 }
 
 
-// takes two parameters sentences and number of sentences
-// prints sentences with numbers in separeted lines
-// return no value
+//-----------------------------------------------------------------------------
+///
+/// prints sentences with number in separeted lines
+///
+/// @param sentences - string that holds sentences
+/// @param num_sentences - number of sentences
+///
+/// @return no value
+//
 
 void printSentencesWithNum(char **sentences, int *num_sentences)
 {
@@ -245,8 +291,14 @@ void printSentencesWithNum(char **sentences, int *num_sentences)
 }
 
 
-// takes no parameter
-// prints choice menu and return no value
+//-----------------------------------------------------------------------------
+///
+/// prints choice menu
+///
+/// @param -takes no parameter 
+///
+/// @return no value
+//
 
 void selectMenu()
 {
@@ -261,9 +313,15 @@ void selectMenu()
 }
 
 
-// takes two parameters text and number
-// goes through text when he encounters a particular sign
-// return new made sentences
+//-----------------------------------------------------------------------------
+///
+/// goes through text and every time he encounters a particular sign new sentence will be made
+///
+/// @param text - string grom which sentences are made
+/// @param num - number of created sentences
+///
+/// @return new made sentences
+//
 
 char **makeSentences(char *text, int *num)
 {
@@ -334,9 +392,15 @@ char **makeSentences(char *text, int *num)
 }
 
 
-// takes no parameter
-// takes user input from stdin
-// return user input type string
+//-----------------------------------------------------------------------------
+///
+/// reads user input from stdin and places it in new variable
+///
+/// @param -takes no parameter
+///
+/// @return variable that holds text
+//
+
 char *userInput()
 {
   size_t current_len = 0;
@@ -377,9 +441,15 @@ char *userInput()
 }
 
 
-// takes two parameters sentences and numbeer of sentences
-// asks user for his choice of function until option 'e' is choosen
-// return no value
+//-----------------------------------------------------------------------------
+///
+/// asks user for his choice of function that manipulates with sentences until 'e' is choosen
+///
+/// @param sentences - string that holds sentences
+/// @param num_sentences - number of sentences
+///
+/// @return no value
+//
 
 void userChoice(char **sentences,int num_sentences)
 {
@@ -446,6 +516,15 @@ void userChoice(char **sentences,int num_sentences)
 // calls functions and checks for possible errors
 // return always 0
 
+//-----------------------------------------------------------------------------
+///
+/// checks user text and new made sentences for possible errors and free alocated memory
+///
+/// @param -takes no parameter
+///
+/// @return 0 or 1 or 2 or 3
+//
+
 int main()
 {
   printf("Bitte Text eingeben:");
@@ -454,7 +533,7 @@ int main()
   if (text == NULL) 
   {
     printf("Zu wenig Speicher vorhanden!\n");
-    return 3;
+    return MEMORY_ERROR;
   }
   printf("\n");
   int num_sentences = 0;
@@ -463,7 +542,7 @@ int main()
   {
     free(text);
     printf("Zu wenig Speicher vorhanden!\n");
-    return 3;
+    return MEMORY_ERROR;
   }
 
   if (num_sentences == 0)
@@ -475,7 +554,7 @@ int main()
       free(sentences[i]);
     }
     free(sentences);
-    return 1;
+    return NO_SENTENCE_ERROR;
   }
   else if(num_sentences > 0)
   {
@@ -494,7 +573,7 @@ int main()
       }
       free(sentences);
       printf("Der Text endet ohne Satzzeichen!\n");
-      return 2;
+      return END_SIGN_ERROR;
     }
   }
   printf("\n");
