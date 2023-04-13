@@ -1,541 +1,541 @@
-# Assignment 2 : Tanz der Zeichenketten
+# Assignment 2 : Dance of the Strings
 
-## Lernziele
-Strings, Pointer, Dynamische Speicherverwaltung
-
----
-**Achtung:** *<string.h>* darf zur Lösung dieser Aufgabe **nicht** verwendet werden!
+## Learning goals
+Strings, pointers, dynamic memory management
 
 ---
+**Caution:** *<string.h>* may **not** be used to solve this task!
 
-## Aufgabenstellung - Übersicht
-Das Programm erhält über `stdin` mehrere Sätze. Wird ein `\n` gelesen, hört das Programm auf, Sätze einzulesen.
-
-Nun wird ein Auswahlmenü angezeigt:
-```
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze verketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
-
-Ihre Wahl: 
-```
----
-Die Funktionen der Optionen werden anhand der folgenden Eingabe erklärt:
-```
-Das ist ein unnoetiger Satz. C ist so schwer.
-```
 ---
 
-Wenn die\*der Benutzer\*in `t` eingibt:
+## Task - Overview
+The program receives several records via `stdin`. If a `\n` is read, the program stops reading records.
+
+A selection menu is now displayed:
 ```
-Text Statistik:
-2 Sätze, 37 Zeichen
-35 Buchstaben (3 Großbuchstaben, 32 Kleinbuchstaben)
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Concatenate two sentences
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
+
+Your choice:
+```
+---
+The functions of the options are explained using the following input:
+```
+That's an unnecessary sentence. C is so heavy.
+```
+---
+
+If the\*the user\* types in `t`:
+```
+Text Statistics:
+2 sentences, 37 characters
+35 letters (3 uppercase, 32 lowercase)
 ```
 
-Wenn die\*der Benutzer\*in `s` eingibt:
+If the\*the user\*types in `s`:
 ```
-Nummer des ersten Satzes: 1 [Anmerkung: 1 wurde eingegeben]
-Nummer des zweiten Satzes: 2 [Anmerkung: 2 wurde eingegeben]
+First record number: 1 [Note: 1 was entered]
+Second Set Number: 2 [Note: 2 was entered]
 ```
-Nun wird der Satz 1 mit dem Satz 2 vertauscht (Ergebnis: `C ist so schwer. Das ist ein unnoetiger Satz.`).
+Now set 1 is swapped with set 2 (result: `C is so hard. This is an unnecessary set.`).
 
 
-Wenn die\*der Benutzer\*in `c` eingibt:
+If the\*the user\*types in `c`:
 ```
-Nummer des ersten Satzes: 1 [Anmerkung: 1 wurde eingegeben]
-Nummer des zweiten Satzes: 2 [Anmerkung: 2 wurde eingegeben]
+First record number: 1 [Note: 1 was entered]
+Second Set Number: 2 [Note: 2 was entered]
 ```
-Nun wird der Satz 1 mit dem Satz 2 mit einem `und` verbunden (Ergebnis: `Das ist ein unnoetiger Satz und C ist so schwer.`).
+Now sentence 1 is connected to sentence 2 with an `and` (result: `This is an unnecessary sentence and C is so difficult.`).
 
-Wenn die\*der Benutzer\*in `p` eingibt:
+If the\*the user\* types in `p`:
 ```
- Nr. | Satz
+  No. | Sentence
 -----+----------------------------------------
-   1 | Das ist ein unnoetiger Satz.
-   2 | C ist so schwer.
+    1 | That's an unnecessary sentence.
+    2 | C is so heavy.
 ```
 
-Wenn die\*der Benutzer\*in `o` eingibt:
+If the\*the user\*types in `o`:
 ```
 Text:
-Das ist ein unnoetiger Satz. C ist so schwer.
+That's an unnecessary sentence. C is so heavy.
 ```
 
-Wenn die\*der Benutzer\*in `e` eingibt:
+If the\*the user\*types in `e`:
 ```
-Programmende!
+Program end!
 ```
-Danach wird das Programm mit dem Rückgabewert `0` beendet.
+Then the program is terminated with the return value `0`.
 
-Bei allen Operationen (außer bei `e` - Programmende) wird danach wieder das Auswahlmenü angezeigt.
+The selection menu is then displayed again for all operations (except for `e` - end of program).
 
 ---
 
-## Aufgabenstellung - Detailliert
+## Task - Detailed
 
-**Hinweis:** Jede ausgegebene Zeile wird mit einem `\n` abgeschlossen. Die Ausnahme bilden Eingaben durch Benutzer\*innen, denn es wird *nur bei der [ersten Eingabe](#einlesen-der-sätze)* (bei `Bitte Text eingeben:`) ein `\n` ausgegeben.
+**Note:** Each output line is terminated with a `\n`. The exception is input by users, because *only with the [first input](#read-in-the-sentences)* (at `Please enter text:`) a `\n` is output.
 
-### Einlesen der Sätze
+### Read in the records
 
-Das Programm startet mit der Ausgabe von:
+The program starts with the output of:
 ```
-Bitte Text eingeben:
+Please enter text:
 ```
 
-Danach kann die\*der Benutzer\*in eine **beliebige Anzahl** von Sätzen eingeben. Ein Satz wird mit eiem Punkt (`.`), Fragezeichen (`?`) oder Rufzeichen (`!`) abgeschlossen. Wird ein `\n` (Enter gedrückt) gelesen, hört das Programm auf, Sätze einzulesen.
+After that, the\*the user\*can type in an **any** number of sentences. A sentence ends with a period (`.`), question mark (`?`), or exclamation mark (`!`). If a `\n` (Enter pressed) is read, the program stops reading sentences.
 
 ---
-**Tipp:** Es macht keinen Sinn, bei jedem einzelnen gelesenen Zeichen immer `realloc()` aufzurufen. Reservieren Sie also z.B. immer Platz für 100 Zeichen, wenn dieser Platz nicht mehr ausreicht, wieder für 100 Zeichen usw. (Hinweis: `fgets()`).
-Speichern Sie danach die Sätze intern als einzelne Strings (ohne Leerzeichen vor oder nach dem Text)! Das heißt pro Satz verwenden Sie einen String und somit ein Mal `malloc()`.
-
----
-
-**Fehlermeldungen:**
- - Wird in der Eingabe kein Zeichen gefunden, das einen Satz abschließt (`.`, `?`, `!`), so kommt es zu der folgenden Ausgabe
-      ```
-      Kein Satz gefunden!
-      ```
-      und das Programm wird mit dem Rückgabewert `1` beendet.
-
-
- - Sollte sich am Ende des letzten Satzes kein Punkt (`.`), Fragezeichen (`?`) oder Rufzeichen (`!`) befinden, so wird
-      ```
-      Der Text endet ohne Satzzeichen!
-      ```
-      ausgegeben und das Programm mit dem Rückgabewert `2` beendet.
-
-
- - Sollte nicht genügend Speicher vorhanden sein, so lautet die Fehlermeldung
-      ```
-      Zu wenig Speicher vorhanden!
-      ```
-      und das Programm wird mit dem Rückgabewert `3` beendet.
+**Tip:** It doesn't make sense to always call `realloc()` for every single character read. For example, always reserve space for 100 characters, if this space is no longer sufficient, again for 100 characters, and so on (hint: `fgets()`).
+Then save the sentences internally as individual strings (without spaces before or after the text)! This means you use one string per block and thus one `malloc()`.
 
 ---
 
-### Auswahlmenü
+**Error Messages:**
+  - If no character is found in the input that completes a sentence (`.`, `?`, `!`), the following output is produced
+       ```
+       No sentence found!
+       ```
+       and the program exits with the return value `1`.
 
-Nach erfolgreicher Eingabe der Sätze wird eine leere Zeile ausgegeben und danach wird ein Auswahlmenü angezeigt:
-```
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze verketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
 
-Ihre Wahl: <Eingabe>
-```
+  - If there is no period (`.`), question mark (`?`) or exclamation mark (`!`) at the end of the last sentence, then
+       ```
+       The text ends without punctuation marks!
+       ```
+       is output and the program exits with the return value `2`.
 
-die\*der Benutzer\*in tätigt nun eine Eingabe, um eine Option auszuwählen. Falls die Eingabe ungültig ist (ungleich `t`, `s`, `c`, `p`, `o` oder `e`), wird wieder `Ihre Wahl: ` ausgegeben (*Hinweis:* `getchar()`). Wird ein Leerzeichen vor dem Buchstaben eingegeben, ist die Eingabe ungültig.
+
+  - If there is not enough memory, the error message reads
+       ```
+       Insufficient memory available!
+       ```
+       and the program exits with the return value `3`.
 
 ---
 
-### Text ohne Zeilennummer ausgeben
+### Selection menu
 
-Wurde die Auswahl `o` durch die\*den Benutzer\*in getroffen, wird der gespeicherte Text ausgegeben. Nach **jedem** Satz wird genau ein Leerzeichen ausgegeben. Beachten Sie, dass sich der Text während der Laufzeit des Programms verändern kann (z.B. durch die Option `s` - *Zwei Sätze vertauschen*)!
-
-Beispiel-Eingabe:
+After successfully entering the sentences, an empty line is output and then a selection menu is displayed:
 ```
-Das ist ein unnoetiger Satz.                     C ist so schwer.
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Concatenate two sentences
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
+
+Your choice: <Enter>
 ```
 
-Ausgabe durch Option `o`:
+die\*the user\*in now types in to select an option. If the input is invalid (not equal to `t`, `s`, `c`, `p`, `o` or `e`), it returns `Your choice: ` (*Note:* `getchar()` ). If a space is entered before the letter, the entry is invalid.
+
+---
+
+### Output text without line number
+
+If the selection `o` was made by the\*user\*in, the saved text is output. Exactly one space is printed after **each** sentence. Note that the text can change while the program is running (e.g. with the option `s` - *swap two sentences*)!
+
+Example input:
+```
+That's an unnecessary sentence. C is so heavy.
+```
+
+Output by option `o`:
 ```
 Text:
-Das ist ein unnoetiger Satz. C ist so schwer.
+That's an unnecessary sentence. C is so heavy.
 ```
 
-Weitere Beispiel-Ausgabe nach dem Vertauschen von Satz 1 und Satz 2 (Option `s`, danach Option `o`):
+More example output after swapping sentence 1 and sentence 2 (option `s`, then option `o`):
 ```
 Text:
-C ist so schwer. Das ist ein unnoetiger Satz.
+C is so heavy. That's an unnecessary sentence.
 ```
 
 ---
 
-### Text mit Zeilennummer ausgeben
+### Output text with line number
 
-Wurde die Auswahl `p` durch die\*den Benutzer\*in getroffen, wird der gespeicherte Text mit Satznummer (der erste Satz hat die Nummer 1) ausgegeben. Beachten Sie, dass sich der Text während der Laufzeit des Programms verändern kann (z.B. durch die Option `s` - *Zwei Sätze vertauschen*)!
+If the selection `p` was made by the\*the user\*in, the saved text is output with the sentence number (the first sentence has the number 1). Note that the text can change while the program is running (e.g. with the option `s` - *swap two sentences*)!
 
-Beispiel-Eingabe:
+Example input:
 ```
-Das ist ein unnoetiger Satz.                     C ist so schwer.
+That's an unnecessary sentence. C is so heavy.
 ```
 
-Ausgabe durch Option `p`:
+Output by option `p`:
 ```
- Nr. | Satz
+  No. | Sentence
 -----+----------------------------------------
-   1 | Das ist ein unnoetiger Satz.
-   2 | C ist so schwer.
+    1 | That's an unnecessary sentence.
+    2 | C is so heavy.
 ```
 
-Weitere Beispiel-Ausgabe nach dem Vertauschen von Satz 1 und Satz 2 (Option `s`, danach Option `p`):
+More sample output after swapping set 1 and set 2 (option `s`, then option `p`):
 ```
- Nr. | Satz
+  No. | Sentence
 -----+----------------------------------------
-   1 | C ist so schwer.
-   2 | Das ist ein unnoetiger Satz.
+    1 | C is so heavy.
+    2 | That's an unnecessary sentence.
 
 ```
-Bitte beachten Sie auch, dass bei einer zweistelligen Nummer nicht eingerückt wird. Somit könnte man die Satznummer mit `%4d` ausgeben.
+Please also note that a two-digit number is not indented. So you could output the block number with `%4d`.
 
 ---
 
-### Programm beenden
+### Exit program
 
-Wurde die Auswahl `e` durch die\*den Benutzer\*in getroffen, wird
+If the choice `e` was made by the\*user\*in, then
 ```
-Programmende!
+Program end!
 ```
-ausgegeben und das Programm mit dem Rückgabewert `0` beendet.
+is output and the program exits with the return value `0`.
 
 ---
 
-### Text-Statistik
+### Text statistics
 
-Wurde die Auswahl `t` durch die\*den Benutzer\*in getroffen, wird eine Statistik zu den Sätzen angezeigt. Es wird die Anzahl der Sätze, die Anzahl der Zeichen (ohne Leerzeichen), sowie die Anzahl der Groß- und die Anzahl der Kleinbuchstaben ausgegeben. Die Ausgabe sieht so aus (`x` ist dabei jeweils durch die entsprechende Anzahl zu ersetzen):
+If the selection `t` was made by the\*user\*in, statistics about the records are displayed. The number of sentences, the number of characters (without spaces), as well as the number of upper and lower case letters are output. The output looks like this (replace `x` with the corresponding number):
 ```
-Text Statistik:
-x Sätze, x Zeichen
-x Buchstaben (x Großbuchstaben, x Kleinbuchstaben)
+Text Statistics:
+x sentences, x characters
+x letters (x uppercase, x lowercase)
 ```
 
 ---
-**ACHTUNG!**
+**DANGER!**
 
-Wurde zuvor die Option `c` ("Zwei Sätze verketten") gewählt, hat sich die Anzahl der Sätze und auch die Anzahl der Zeichen im Vergleich zu den eingegebenen Sätzen verändert!
-
----
-
-### Zwei Sätze vertauschen
-
-Wurde die Auswahl `s` durch die\*den Benutzer\*in getroffen, wird zuerst die Anzahl der Sätze überprüft. Sollte der Text nur mehr aus einem Satz bestehen, wird `Nur noch ein Satz vorhanden!` 
-ausgegeben und danach wieder das Auswahlmenü angezeigt. Anderenfalls werden zuerst die Satznummern der Sätze abgefragt, die vertauscht werden sollen:
-
-```
-Nummer des ersten Satzes: <Eingabe>
-Nummer des zweiten Satzes: <Eingabe>
-```
-
-Wird eine ungültige Zahl oder keine Zahl eingegeben, wird nocheinmal `Nummer des ersten Satzes: ` oder `Nummer des zweiten Satzes: ` ausgegeben.
-Die Nummern des ersten und des zweiten Satzes müssen sich unterscheiden. Daher ist bei der Abfrage der zweiten Satznummer die nochmalige Eingabe der ersten Satznummer ungültig! Beispiel:
-```
-Nummer des ersten Satzes: 2
-Nummer des zweiten Satzes: 2
-Nummer des zweiten Satzes: 1
-```
-
-Nach der Eingabe der Satznummern werden die Sätze in der internen Datenstruktur vertauscht.
+If the option `c` ("concatenate two sentences") was previously selected, the number of sentences and also the number of characters has changed compared to the entered sentences!
 
 ---
 
-### Zwei Sätze verketten
+### Swap two sentences
 
-Wurde die Auswahl `c` durch die\*den Benutzer\*in getroffen, werden zuerst die Satznummern der Sätze abgefragt, die zusammengefügt werden sollen:
+If the selection `s` was made by the\*user\*in, the number of records is checked first. If the text consists of only one sentence, `Only one sentence left!` will appear
+output and then the selection menu is displayed again. Otherwise, the block numbers of the blocks that are to be swapped are queried first:
 
 ```
-Nummer des ersten Satzes: <Eingabe>
-Nummer des zweiten Satzes: <Eingabe>
+First record number: <Input>
+Second record number: <Input>
 ```
 
-Die Eingabe soll exakt so wie bei der Option `s` erfolgen. Denken Sie auch an die Überprüfung, ob noch mindestens 2 Sätze vorhanden sind!
+If an invalid number or no number is entered, `First block number: ` or `Second block number: ` is output again.
+The numbers of the first and second sentence must be different. Therefore, when asking for the second block number, entering the first block number again is invalid! Example:
+```
+First sentence number: 2
+Second set number: 2
+Second set number: 1
+```
 
-Nach der Eingabe der Satznummern werden die Sätze in der internen Datenstruktur zusammengefügt. Dabei wird das Satzzeichen, das den ersten Satz abgeschlossen hat, durch ein ` und ` ersetzt. (Satzaufbau: Satz mit der Nummer `Nummer des ersten Satzes` (ohne abschließendes Satzzeichen) + ` und ` + Satz mit der Nummer `Nummer des zweiten Satzes`.) Bedenken Sie, dass zwischen den beiden Sätzen mehrere Sätze stehen können z.B. Satz 6 mit Satz 2 verbinden.
+After entering the block numbers, the blocks are swapped in the internal data structure.
 
-Auf die Groß- und Kleinschreibung (Satzanfang) ist keine Rücksicht zu nehmen. In der [Beispielausgabe](#beispielausgabe) sehen sie weitere Beispiele, in welchen Sätze verkettet werden. Diese verdeutlichen auch das Verketten von Sätzen, die nicht aufeinanderfolgen.
+---
+
+### Concatenate two sentences
+
+If the selection `c` was made by the\*the user\*in, the block numbers of the blocks that are to be joined are queried first:
+
+```
+First record number: <Input>
+Second record number: <Input>
+```
+
+The input should be exactly the same as for the `s` option. Also remember to check if there are at least 2 sets left!
+
+After entering the block numbers, the blocks are combined in the internal data structure. The punctuation mark that ends the first sentence is replaced by ` and `. (Sentence structure: sentence with the number `number of the first sentence` (without final punctuation mark) + ` and ` + sentence with the number `number of the second sentence`.) Remember that there can be several sentences between the two sentences, e.g. sentence 6 connect to set 2.
+
+Upper and lower case (beginning of sentence) is not to be taken into account. In the [example output](#example output) you can see further examples in which sentences are concatenated. These also clarify the concatenation of sentences that are not consecutive.
 
 ---
 
 
-## Beispielausgabe
+## Example output
 ```
-Bitte Text eingeben:
-Das ist ein Text. Hier kommt der zweite Satz. Ich bin der dritte Satz. Ein vierter Satz geht auch noch!
+Please enter text:
+This is a text. Here comes the second sentence. I am the third sentence. A fourth sentence is also possible!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: u
-Ihre Wahl:    t
-Ihre Wahl:  t
-Ihre Wahl: t
-Text Statistik:
-4 Sätze, 84 Zeichen
-80 Buchstaben (8 Großbuchstaben, 72 Kleinbuchstaben)
+Your choice: u
+Your choice: t
+Your choice: t
+Your choice: t
+Text Statistics:
+4 sentences, 84 characters
+80 letters (8 uppercase, 72 lowercase)
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: o
+Your choice: o
 Text:
-Das ist ein Text. Hier kommt der zweite Satz. Ich bin der dritte Satz. Ein vierter Satz geht auch noch! 
+This is a text. Here comes the second sentence. I am the third sentence. A fourth sentence is also possible!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: p
- Nr. | Satz
+Your choice: p
+  No. | Sentence
 -----+----------------------------------------
-   1 | Das ist ein Text.
-   2 | Hier kommt der zweite Satz.
-   3 | Ich bin der dritte Satz.
-   4 | Ein vierter Satz geht auch noch!
+    1 | This is a text.
+    2 | Here comes the second sentence.
+    3 | I am the third sentence.
+    4 | A fourth sentence is also possible!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: s
-Nummer des ersten Satzes: 100
-Nummer des ersten Satzes: 2
-Nummer des zweiten Satzes: 4
+Your choice: s
+First set number: 100
+First sentence number: 2
+Second set number: 4
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: o
+Your choice: o
 Text:
-Das ist ein Text. Ein vierter Satz geht auch noch! Ich bin der dritte Satz. Hier kommt der zweite Satz. 
+This is a text. A fourth sentence is also possible! I am the third sentence. Here comes the second sentence.
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: p
- Nr. | Satz
+Your choice: p
+  No. | Sentence
 -----+----------------------------------------
-   1 | Das ist ein Text.
-   2 | Ein vierter Satz geht auch noch!
-   3 | Ich bin der dritte Satz.
-   4 | Hier kommt der zweite Satz.
+    1 | This is a text.
+    2 | A fourth sentence is also possible!
+    3 | I am the third sentence.
+    4 | Here comes the second sentence.
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: t
-Text Statistik:
-4 Sätze, 84 Zeichen
-80 Buchstaben (8 Großbuchstaben, 72 Kleinbuchstaben)
+Your choice: t
+Text Statistics:
+4 sentences, 84 characters
+80 letters (8 uppercase, 72 lowercase)
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: c
-Nummer des ersten Satzes: 4
-Nummer des zweiten Satzes: 1
+Your choice: c
+First sentence number: 4
+Second set number: 1
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: p
- Nr. | Satz
+Your choice: p
+  No. | Sentence
 -----+----------------------------------------
-   1 | Ein vierter Satz geht auch noch!
-   2 | Ich bin der dritte Satz.
-   3 | Hier kommt der zweite Satz und Das ist ein Text.
+    1 | A fourth sentence is also possible!
+    2 | I am the third sentence.
+    3 | Here comes the second sentence and This is a text.
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: o
+Your choice: o
 Text:
-Ein vierter Satz geht auch noch! Ich bin der dritte Satz. Hier kommt der zweite Satz und Das ist ein Text. 
+A fourth sentence is also possible! I am the third sentence. Here comes the second sentence and This is a text.
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: t
-Text Statistik:
-3 Sätze, 86 Zeichen
-83 Buchstaben (8 Großbuchstaben, 75 Kleinbuchstaben)
+Your choice: t
+Text Statistics:
+3 sentences, 86 characters
+83 letters (8 uppercase, 75 lowercase)
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: c
-Nummer des ersten Satzes: 3
-Nummer des zweiten Satzes: 2
+Your choice: c
+First sentence number: 3
+Second set number: 2
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: p
- Nr. | Satz
+Your choice: p
+  No. | Sentence
 -----+----------------------------------------
-   1 | Ein vierter Satz geht auch noch!
-   2 | Hier kommt der zweite Satz und Das ist ein Text und Ich bin der dritte Satz.
+    1 | A fourth sentence is also possible!
+    2 | Here comes the second sentence and This is a text and I am the third sentence.
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: c
-Nummer des ersten Satzes: 2
-Nummer des zweiten Satzes: 1
+Your choice: c
+First sentence number: 2
+Second set number: 1
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: p
- Nr. | Satz
+Your choice: p
+  No. | Sentence
 -----+----------------------------------------
-   1 | Hier kommt der zweite Satz und Das ist ein Text und Ich bin der dritte Satz und Ein vierter Satz geht auch noch!
+    1 | Here comes the second sentence and This is a text and I am the third sentence and A fourth sentence is also possible!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: o
+Your choice: o
 Text:
-Hier kommt der zweite Satz und Das ist ein Text und Ich bin der dritte Satz und Ein vierter Satz geht auch noch! 
+Here comes the second sentence and This is a text and I am the third sentence and A fourth sentence is also possible!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: t
-Text Statistik:
-1 Sätze, 90 Zeichen
-89 Buchstaben (8 Großbuchstaben, 81 Kleinbuchstaben)
+Your choice: t
+Text Statistics:
+1 sentences, 90 characters
+89 letters (8 uppercase, 81 lowercase)
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: s
-Nur noch ein Satz vorhanden!
+Your choice: s
+Only one set left!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: c
-Nur noch ein Satz vorhanden!
+Your choice: c
+Only one set left!
 
-Wählen Sie eine Option:
-  t: Text-Statistik
-  s: Zwei Sätze vertauschen
-  c: Zwei Sätze zusammenketten
-  p: Text mit Zeilennummer ausgeben
-  o: Text ohne Zeilennummer ausgeben
-  e: Programm beenden
+Choose an option:
+   t: text statistics
+   s: Swap two sentences
+   c: Chain two sets together
+   p: Output text with line number
+   o: Output text without line number
+   e: Exit program
 
-Ihre Wahl: e
-Programmende!
+Your choice: e
+Program end!
 
 ```
 
 ---
-**ACHTUNG!**
+**DANGER!**
 
-Bitte befolgen Sie die Anweisungen zur Ausgabe *genau*, da die Test Cases selbst bei kleinen Fehlern (z.B. ein Leerzeichen
-zu wenig oder zu viel) fehlschlagen! Nutzen Sie auch das zur Verfügung gestellte Testsystem, welches wertvolle Hinweise auf Fehler in Ihrem Programm liefert.
+Please follow the output instructions *precisely* as even small errors (e.g. a space
+too little or too much) fail! You can also use the test system provided, which provides valuable information about errors in your program.
 
 ---
 
 
-## Spezifikation
-* Alle Ausgaben erfolgen auf stdout
-    * Keinerlei Ausgaben auf stderr
-* string.h darf **nicht** verwendet werden!
-* Abgabe bis *spätestens*: 11.12.2021 23:59 (in Österreich gültige Zeit)
-* Abzugebende Datei: a2.c
+## specification
+* All output is to stdout
+     * No output to stderr
+* string.h must **not** be used!
+* Submission by *at the latest*: 11.12.2021 23:59 (valid time in Austria)
+* File to submit: a2.c
 
-## Bewertung
-Das Assignment wird [wie im TeachCenter beschrieben](https://tc.tugraz.at/main/mod/page/view.php?id=55761) bewertet. Machen Sie sich auch mit dem [Beurteilungsschema](https://tc.tugraz.at/main/mod/page/view.php?id=55602) für die Übungen vertraut, insbesondere mit den Regeln zu Plagiaten!
+## Evaluation
+The assignment is evaluated [as described in the TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=55761). Familiarize yourself with the [assessment scheme](https://tc.tugraz.at/main/mod/page/view.php?id=55602) for the exercises, especially with the rules on plagiarism!
